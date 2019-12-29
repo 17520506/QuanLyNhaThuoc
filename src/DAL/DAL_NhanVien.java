@@ -25,6 +25,7 @@ public class DAL_NhanVien {
     Connection conn = null;
     ResultSet rs=null;
     PreparedStatement ps=null;
+    Statement st=null;
     public ArrayList<DTO_NhanVien> layDanhSachNhanVien()
     {
         ConnectToMSSQL a = new ConnectToMSSQL();
@@ -115,6 +116,30 @@ public class DAL_NhanVien {
     }
     public void xoaNhanVien(int id)
     {
+        String sql = "Delete NhanVien where id = "+ id;
+        ConnectToMSSQL a = new ConnectToMSSQL();
+        conn = a.getConnection();
+        try {
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL_NhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try {
+                if(null != conn) { 
+                    // cleanup resources, once after processing
+                    //rs.close();
+                    st.close();
+                    // and then finally close connection
+                    conn.close();
+                }
+            }
+            catch (SQLException sqlex) {
+                sqlex.printStackTrace();
+            }
+        }
         
     }
 }
