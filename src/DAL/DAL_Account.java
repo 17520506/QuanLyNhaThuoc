@@ -24,15 +24,15 @@ public class DAL_Account {
     public boolean KiemTraTaiKhoan(String tk,String mk)
     {
         boolean kq = false;
-        String truyVan = "select * from tblAccount where userName='" + tk + "' and passWord='" + mk + "'";
+        String truyVan = "select * from Account where username='" + tk + "' and password='" + mk + "'";
         System.out.println(truyVan);
         ResultSet rs = quanlynhathuoc.QuanLyNhaThuoc.s.ExcuteQueryGetTable(truyVan);
 
         try {
             if (rs.next()) {
                 kq = true;
-                acc.setUserName(rs.getString("TenNhanVien"));
-                acc.setPassWord(rs.getString("UserName"));
+                acc.setUserName(rs.getString("username"));
+                acc.setPassWord(rs.getString("password"));
                             }
         } catch (SQLException ex) {
             System.out.println("lỗi đăng nhập");

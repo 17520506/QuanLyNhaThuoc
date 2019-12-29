@@ -5,77 +5,63 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author ADMIN
  */
 public class DTO_NhanVien {
-    private long id;
+    private int id,idAccount,idPhanQuyen;
+    Date ngayVaoLam, ngaySinh;
+    String hoTen, diaChi, email, sdt, gioiTinh;
 
-        private String tenNhanVien;
-
-        private String chucVu;
-
-        private boolean gioiTinh;
-
-        private int tuoi;
-
-        private String email;
-
-        private String diaChi;
-
-        private String sDT;
-
-        private int phanQuyen;
-
-        private long taiKhoan;
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getTenNhanVien() {
-        return tenNhanVien;
+    public int getIdAccount() {
+        return idAccount;
     }
 
-    public void setTenNhanVien(String tenNhanVien) {
-        this.tenNhanVien = tenNhanVien;
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
     }
 
-    public String getChucVu() {
-        return chucVu;
+    public int getIdPhanQuyen() {
+        return idPhanQuyen;
     }
 
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
+    public void setIdPhanQuyen(int idPhanQuyen) {
+        this.idPhanQuyen = idPhanQuyen;
     }
 
-    public boolean isGioiTinh() {
-        return gioiTinh;
+    public Date getNgayVaoLam() {
+        return ngayVaoLam;
     }
 
-    public void setGioiTinh(boolean gioiTinh) {
-        this.gioiTinh = gioiTinh;
+    public void setNgayVaoLam(Date ngayVaoLam) {
+        this.ngayVaoLam = ngayVaoLam;
     }
 
-    public int getTuoi() {
-        return tuoi;
+    public Date getNgaySinh() {
+        return ngaySinh;
     }
 
-    public void setTuoi(int tuoi) {
-        this.tuoi = tuoi;
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
-    public String getEmail() {
-        return email;
+    public String getHoTen() {
+        return hoTen;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
     }
 
     public String getDiaChi() {
@@ -86,28 +72,31 @@ public class DTO_NhanVien {
         this.diaChi = diaChi;
     }
 
-    public String getsDT() {
-        return sDT;
+    public String getEmail() {
+        return email;
     }
 
-    public void setsDT(String sDT) {
-        this.sDT = sDT;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getPhanQuyen() {
-        return phanQuyen;
+    public String getSdt() {
+        return sdt;
     }
 
-    public void setPhanQuyen(int phanQuyen) {
-        this.phanQuyen = phanQuyen;
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
     }
 
-    public long getTaiKhoan() {
-        return taiKhoan;
+    public String getGioiTinh() {
+        return gioiTinh;
     }
 
-    public void setTaiKhoan(long taiKhoan) {
-        this.taiKhoan = taiKhoan;
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
     }
+
+    
+
         
 }
