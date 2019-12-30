@@ -13,9 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,8 +48,11 @@ public class DAL_NhanVien {
                 nv.setDiaChi(rs.getString("diaChi"));
                 nv.setEmail(rs.getString("email"));
                 nv.setSdt(rs.getString("sdt"));
-                nv.setIdAccount(rs.getInt("idAcount"));
                 nv.setIdPhanQuyen(rs.getInt("idPhanQuyen"));
+                nv.setIdAccount(rs.getInt("idAccount"));
+                
+                
+                
                 list.add(nv);
                 
             }
@@ -75,26 +80,39 @@ public class DAL_NhanVien {
     public int themNhanVien(DTO_NhanVien nv)
     {
         int themNV=0;
-        
+//        String sql = "INSERT INTO NhanVien(hoTen,ngayVaoLam,ngaySinh,gioiTinh,diaChi,email,sdt,idAccount,idPhanQuyen)"
+//                + " VALUE('"+nv.getHoTen()+"','"+nv.getNgayVaoLam().toString()+"','"+nv.getNgaySinh().toString()+
+//                "','"+nv.getGioiTinh()+"','"+nv.getDiaChi()+"','"+nv.getEmail()+"','"+nv.getSdt()+"','"+nv.getIdAccount()+"','"+nv.getIdPhanQuyen()+"')";
         String sql = "INSERT INTO NhanVien(hoTen,ngayVaoLam,ngaySinh,gioiTinh,diaChi,email,sdt,idAccount,idPhanQuyen)"
-                + " VALUE(?,?,?,?,?,?,?,?,?)";
+                + " VALUES(?,?,?,?,?,?,?,?,?)";
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
         try {
+            //st=conn.createStatement();
+            //st.executeUpdate(sql);
             ps = conn.prepareStatement(sql);
             ps.setString(1, nv.getHoTen());
-            ps.setDate(2, (Date) nv.getNgayVaoLam());
-            ps.setDate(3, (Date) nv.getNgaySinh());
+            //String dateNgayVaoLam =  nv.getNgayVaoLam().toString();
+            //String dateNgaySinh = nv.getNgaySinh().toString();
+            //java.sql.Date dateNgayVaoLam; 
+            //dateNgayVaoLam = new java.sql.Date(nv.getNgayVaoLam().getDate());
+            String ngayVaoLam = nv.getNgayVaoLam()+"";
+            String ngaySinh = nv.getNgaySinh()+"";
+            ps.setDate(2, java.sql.Date.valueOf(ngayVaoLam));
+            ps.setDate(3, java.sql.Date.valueOf(ngaySinh));
             ps.setString(4, nv.getGioiTinh());
             ps.setString(5, nv.getDiaChi());
             ps.setString(6, nv.getEmail());
             ps.setString(7, nv.getSdt());
             ps.setInt(8, nv.getIdAccount());
             ps.setInt(9, nv.getIdPhanQuyen());
+            //ps.execute();
             themNV = ps.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "Thêm thành công!");
             
         } catch (SQLException ex) {
             Logger.getLogger(DAL_NhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            //JOptionPane.showMessageDialog(null, "Thêm thất bại!");
         }
         finally
         {
@@ -141,5 +159,55 @@ public class DAL_NhanVien {
             }
         }
         
+    }
+    public void suaNhanVien(DTO_NhanVien nv)
+    {
+        String sql = "Update NhanVien  set hoTen= ? ,ngayVaoLam= ?,ngaySinh=?,gioiTinh=?,diaChi=?,email=?,sdt=?,idPhanQuyen=? where id=?";
+        ConnectToMSSQL a = new ConnectToMSSQL();
+        conn = a.getConnection();
+        try {
+            //st=conn.createStatement();
+            //st.executeUpdate(sql);
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, nv.getHoTen());
+            //String dateNgayVaoLam =  nv.getNgayVaoLam().toString();
+            //String dateNgaySinh = nv.getNgaySinh().toString();
+            //java.sql.Date dateNgayVaoLam; 
+            //dateNgayVaoLam = new java.sql.Date(nv.getNgayVaoLam().getDate());
+            //java.util.Date d1 = new java.util.Date(nv.getNgayVaoLam()+"");
+            String ngayVaoLam = nv.getNgayVaoLam()+"";
+            String ngaySinh = nv.getNgaySinh()+"";
+            ps.setDate(2, java.sql.Date.valueOf(ngayVaoLam));
+            ps.setDate(3, java.sql.Date.valueOf(ngaySinh));
+            ps.setString(4, nv.getGioiTinh());
+            ps.setString(5, nv.getDiaChi());
+            ps.setString(6, nv.getEmail());
+            ps.setString(7, nv.getSdt());
+            //ps.setInt(8, nv.getIdAccount());
+            ps.setInt(8, nv.getIdPhanQuyen());
+            ps.setInt(9, nv.getId());
+            //ps.execute();
+            ps.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "Thêm thành công!");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL_NhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            //JOptionPane.showMessageDialog(null, "Thêm thất bại!");
+        }
+        finally
+        {
+            try {
+                if(null != conn) { 
+                    // cleanup resources, once after processing
+                    //rs.close();
+                    ps.close();
+                    // and then finally close connection
+                    conn.close();
+                }
+            }
+            catch (SQLException sqlex) {
+                sqlex.printStackTrace();
+            }
+        }
     }
 }

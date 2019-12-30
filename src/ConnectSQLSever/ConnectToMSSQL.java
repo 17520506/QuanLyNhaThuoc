@@ -28,7 +28,7 @@ public class ConnectToMSSQL {
             Logger.getLogger(ConnectToMSSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=QLNhaThuoc", "sa", "123456");
+            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=QLNhaThuoc", "sa", "123456");
         } catch (SQLException ex) {
             Logger.getLogger(ConnectToMSSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
