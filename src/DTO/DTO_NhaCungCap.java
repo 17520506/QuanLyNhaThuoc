@@ -12,10 +12,28 @@ package DTO;
 public class DTO_NhaCungCap {
 
     private int id;
-    private String name;
+    private String tenNCC;
     private String sdt;
     private String email;
     private String diaChi;
+    private double tongTienMua, noCanTra;
+    private String ghiChu;
+
+    public double getTongTienMua() {
+        return tongTienMua;
+    }
+
+    public void setTongTienMua(double tongTienMua) {
+        this.tongTienMua = tongTienMua;
+    }
+
+    public double getNoCanTra() {
+        return noCanTra;
+    }
+
+    public void setNoCanTra(double noCanTra) {
+        this.noCanTra = noCanTra;
+    }
 
     public int getId() {
         return id;
@@ -25,13 +43,15 @@ public class DTO_NhaCungCap {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTenNCC() {
+        return tenNCC;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTenNCC(String tenNCC) {
+        this.tenNCC = tenNCC;
     }
+
+    
 
     public String getSdt() {
         return sdt;
@@ -55,6 +75,14 @@ public class DTO_NhaCungCap {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
     }
     
 }
