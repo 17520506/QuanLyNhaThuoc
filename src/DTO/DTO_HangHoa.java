@@ -11,8 +11,8 @@ package DTO;
  */
 public class DTO_HangHoa {
     int id,idNhomHang,idDonViTinh,soLuong;
-    double giaNhap,giaBan;
-    String tenHangHoaString,congDungString,thanhPhan;
+    long giaNhap,giaBan;
+    String tenHangHoa,congDung,thanhPhan;
 
     public int getId() {
         return id;
@@ -46,36 +46,36 @@ public class DTO_HangHoa {
         this.soLuong = soLuong;
     }
 
-    public double getGiaNhap() {
+    public long getGiaNhap() {
         return giaNhap;
     }
 
-    public void setGiaNhap(double giaNhap) {
+    public void setGiaNhap(long giaNhap) {
         this.giaNhap = giaNhap;
     }
 
-    public double getGiaBan() {
+    public long getGiaBan() {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(long giaBan) {
         this.giaBan = giaBan;
     }
 
-    public String getTenHangHoaString() {
-        return tenHangHoaString;
+    public String getTenHangHoa() {
+        return tenHangHoa;
     }
 
-    public void setTenHangHoaString(String tenHangHoaString) {
-        this.tenHangHoaString = tenHangHoaString;
+    public void setTenHangHoa(String tenHangHoa) {
+        this.tenHangHoa = tenHangHoa;
     }
 
-    public String getCongDungString() {
-        return congDungString;
+    public String getCongDung() {
+        return congDung;
     }
 
-    public void setCongDungString(String congDungString) {
-        this.congDungString = congDungString;
+    public void setCongDung(String congDung) {
+        this.congDung = congDung;
     }
 
     public String getThanhPhan() {
@@ -86,7 +86,5 @@ public class DTO_HangHoa {
         this.thanhPhan = thanhPhan;
     }
 
-    
-    
         
 }

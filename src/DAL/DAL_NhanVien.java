@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.omg.CORBA.NVList;
 
 /**
  *
@@ -88,14 +89,8 @@ public class DAL_NhanVien {
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
         try {
-            //st=conn.createStatement();
-            //st.executeUpdate(sql);
             ps = conn.prepareStatement(sql);
             ps.setString(1, nv.getHoTen());
-            //String dateNgayVaoLam =  nv.getNgayVaoLam().toString();
-            //String dateNgaySinh = nv.getNgaySinh().toString();
-            //java.sql.Date dateNgayVaoLam; 
-            //dateNgayVaoLam = new java.sql.Date(nv.getNgayVaoLam().getDate());
             String ngayVaoLam = nv.getNgayVaoLam()+"";
             String ngaySinh = nv.getNgaySinh()+"";
             ps.setDate(2, java.sql.Date.valueOf(ngayVaoLam));
@@ -210,4 +205,59 @@ public class DAL_NhanVien {
             }
         }
     }
+    public ArrayList<DTO_NhanVien> timKiemNhanVien(String timKiem)
+    {
+        ArrayList<DTO_NhanVien> list = new ArrayList<>();
+        ConnectToMSSQL a = new ConnectToMSSQL();
+        conn = a.getConnection();
+        String sql = "Select * from NhanVien where hoTen like ?";
+        
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%"+timKiem+"%");
+            rs=ps.executeQuery();
+            while(rs.next())
+            {
+                DTO_NhanVien nv = new DTO_NhanVien();
+                nv.setId(Integer.parseInt(rs.getString("id")));
+                nv.setHoTen(rs.getString("hoTen"));
+                nv.setNgayVaoLam(rs.getDate("ngayVaoLam"));
+                nv.setNgaySinh(rs.getDate("ngaySinh"));
+                nv.setGioiTinh(rs.getString("gioiTinh"));
+                nv.setDiaChi(rs.getString("diaChi"));
+                nv.setEmail(rs.getString("email"));
+                nv.setSdt(rs.getString("sdt"));
+                nv.setIdPhanQuyen(rs.getInt("idPhanQuyen"));
+                nv.setIdAccount(rs.getInt("idAccount"));
+                
+                
+                
+                list.add(nv);
+                
+            }
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL_NhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try {
+                if(null != conn) { 
+                    // cleanup resources, once after processing
+                    rs.close();
+                    ps.close();
+                    // and then finally close connection
+                    conn.close();
+                }
+            }
+            catch (SQLException sqlex) {
+                sqlex.printStackTrace();
+            }
+        }
+        return list;
+    }
+    
+    
 }

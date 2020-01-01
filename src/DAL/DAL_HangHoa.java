@@ -6,7 +6,7 @@
 package DAL;
 
 import ConnectSQLSever.ConnectToMSSQL;
-import DTO.DTO_NhaCungCap;
+import DTO.DTO_HangHoa;
 import DTO.DTO_NhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,38 +21,37 @@ import java.util.logging.Logger;
  *
  * @author ADMIN
  */
-public class DAL_NhaCungCap {
+public class DAL_HangHoa {
     Connection conn = null;
     ResultSet rs=null;
     PreparedStatement ps=null;
     Statement st=null;
-    
-    public ArrayList<DTO_NhaCungCap> layDanhSachNhaCungCap()
+    public ArrayList<DTO_HangHoa> layDanhSachHangHoa()
     {
-        ArrayList<DTO_NhaCungCap> list = new ArrayList<>();
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
-        String sql = "SELECT * FROM NhaCungCap";
+        ArrayList<DTO_HangHoa> list = new ArrayList<>();
+        String sql = "SELECT * FROM HangHoa";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
             {
-                DTO_NhaCungCap ncc = new DTO_NhaCungCap();
-                ncc.setId(rs.getInt("id"));
-                ncc.setTenNCC(rs.getString("tenNCC"));
-                ncc.setDiaChi(rs.getString("diaChi"));
-                ncc.setEmail(rs.getString("email"));
-                ncc.setSdt(rs.getString("sdt"));
-                ncc.setTongTienMua(rs.getDouble("tongTienMua"));
-                ncc.setNoCanTra(rs.getDouble("noCanTra"));
-                ncc.setGhiChu(rs.getString("ghiChu"));
-                
-                list.add(ncc);
+                DTO_HangHoa hh = new DTO_HangHoa();
+                hh.setId(rs.getInt("id"));
+                hh.setTenHangHoa(rs.getString("tenHangHoa"));
+                hh.setIdDonViTinh(rs.getInt("idDonViTinh"));
+                hh.setIdNhomHang(rs.getInt("idNhomHang"));
+                hh.setGiaBan(rs.getLong("giaBan"));
+                hh.setGiaNhap(rs.getLong("giaNhap"));
+                hh.setSoLuong(rs.getInt("soLuong"));
+                hh.setThanhPhan(rs.getString("thanhPhan"));
+                hh.setCongDung(rs.getString("congDung"));
+                list.add(hh);
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAL_NhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAL_HangHoa.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -69,30 +68,34 @@ public class DAL_NhaCungCap {
                 sqlex.printStackTrace();
             }
         }
+        
         return list;
     }
-    public int themNhaCungCap(DTO_NhaCungCap ncc)
+    
+    
+    public int themHangHoa(DTO_HangHoa hh)
     {
-        int themNCC=0;
-        String sql = "INSERT INTO NhaCungCap(tenNCC,sdt,email,diaChi,ghiChu,tongTienMua,noCanTra)"
-                + " VALUES(?,?,?,?,?,?,?)";
+        int themHH=0;
+     String sql = "INSERT INTO HangHoa(tenHangHoa,idNhomHang,idDonViTinh,congDung,thanhPhan,soLuong,giaNhap,giaBan)"
+                + " VALUES(?,?,?,?,?,?,?,?)";
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
         try {
             ps = conn.prepareStatement(sql);
-            ps.setString(1, ncc.getTenNCC());
-            ps.setString(2, ncc.getSdt());
-            ps.setString(3, ncc.getEmail());
-            ps.setString(4, ncc.getDiaChi());
-            ps.setString(5, ncc.getGhiChu());
-            ps.setDouble(6, ncc.getTongTienMua());
-            ps.setDouble(7, ncc.getNoCanTra());
+            ps.setString(1,hh.getTenHangHoa() );
+            ps.setInt(2, hh.getIdNhomHang());
+            ps.setInt(3, hh.getIdDonViTinh());
+            ps.setString(4, hh.getCongDung());
+            ps.setString(5, hh.getThanhPhan());
+            ps.setInt(6, hh.getSoLuong());
+            ps.setLong(7, hh.getGiaNhap());
+            ps.setLong(8, hh.getGiaBan());
             //ps.execute();
-            themNCC = ps.executeUpdate();
+            themHH = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Thêm thành công!");
             
         } catch (SQLException ex) {
-            Logger.getLogger(DAL_NhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAL_HangHoa.class.getName()).log(Level.SEVERE, null, ex);
             //JOptionPane.showMessageDialog(null, "Thêm thất bại!");
         }
         finally
@@ -110,18 +113,20 @@ public class DAL_NhaCungCap {
                 sqlex.printStackTrace();
             }
         }
-        return themNCC;
+        
+        return themHH;
     }
-    public void xoaNhaCungCap(int id)
+    
+    public void xoaHangHoa(int id)
     {
-        String sql = "Delete NhaCungCap where id = "+ id;
+        String sql = "Delete HangHoa where id = "+ id;
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
         try {
             st = conn.createStatement();
             st.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(DAL_NhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAL_HangHoa.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -140,27 +145,31 @@ public class DAL_NhaCungCap {
         }
         
     }
-    public void suaNhaCungCap(DTO_NhaCungCap ncc)
+    
+    
+    
+    public void suaHangHoa(DTO_HangHoa hh)
     {
-        String sql = "Update NhaCungCap set tenNCC= ? ,sdt= ?,email=?,diaChi=?,ghiChu=? where id=?";
+        String sql = "Update HangHoa  set tenHangHoa= ? ,idNhomHang= ?,idDonViTinh=?,congDung=?,thanhPhan=?,soLuong=?,giaNhap=?,giaBan=? where id=?";
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
         try {
-            //st=conn.createStatement();
-            //st.executeUpdate(sql);
             ps = conn.prepareStatement(sql);
-            ps.setString(1, ncc.getTenNCC());
-            ps.setString(2, ncc.getSdt());
-            ps.setString(3, ncc.getEmail());
-            ps.setString(4, ncc.getDiaChi());
-            ps.setString(5, ncc.getGhiChu());
-            ps.setInt(6, ncc.getId());
-            
+            ps.setString(1,hh.getTenHangHoa() );
+            ps.setInt(2, hh.getIdNhomHang());
+            ps.setInt(3, hh.getIdDonViTinh());
+            ps.setString(4, hh.getCongDung());
+            ps.setString(5, hh.getThanhPhan());
+            ps.setInt(6, hh.getSoLuong());
+            ps.setLong(7, hh.getGiaNhap());
+            ps.setLong(8, hh.getGiaBan());
+            ps.setInt(9, hh.getId());
+            //ps.execute();
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Thêm thành công!");
             
         } catch (SQLException ex) {
-            Logger.getLogger(DAL_NhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAL_HangHoa.class.getName()).log(Level.SEVERE, null, ex);
             //JOptionPane.showMessageDialog(null, "Thêm thất bại!");
         }
         finally
@@ -179,12 +188,15 @@ public class DAL_NhaCungCap {
             }
         }
     }
-    public ArrayList<DTO_NhaCungCap> timKiemNhaCungCap(String timKiem)
+    
+    
+    
+    public ArrayList<DTO_HangHoa> timKiemHangHoa(String timKiem)
     {
-        ArrayList<DTO_NhaCungCap> list = new ArrayList<>();
+        ArrayList<DTO_HangHoa> list = new ArrayList<>();
         ConnectToMSSQL a = new ConnectToMSSQL();
         conn = a.getConnection();
-        String sql = "Select * from NhaCungCap where tenNCC like ?";
+        String sql = "Select * from HangHoa where tenHangHoa like ?";
         
         try {
             ps = conn.prepareStatement(sql);
@@ -192,23 +204,21 @@ public class DAL_NhaCungCap {
             rs=ps.executeQuery();
             while(rs.next())
             {
-                DTO_NhaCungCap ncc = new DTO_NhaCungCap();
-                ncc.setId(rs.getInt("id"));
-                ncc.setTenNCC(rs.getString("tenNCC"));
-                ncc.setDiaChi(rs.getString("diaChi"));
-                ncc.setEmail(rs.getString("email"));
-                ncc.setSdt(rs.getString("sdt"));
-                ncc.setTongTienMua(rs.getDouble("tongTienMua"));
-                ncc.setNoCanTra(rs.getDouble("noCanTra"));
-                ncc.setGhiChu(rs.getString("ghiChu"));
-                list.add(ncc);
+                DTO_HangHoa hh = new DTO_HangHoa();
+                hh.setId(rs.getInt("id"));
+                hh.setTenHangHoa(rs.getString("tenHangHoa"));
+                hh.setIdDonViTinh(rs.getInt("idDonViTinh"));
+                hh.setIdNhomHang(rs.getInt("idNhomHang"));
+                hh.setThanhPhan(rs.getString("thanhPhan"));
+                hh.setCongDung(rs.getString("congDung"));
+                hh.setGiaBan(rs.getLong("giaBan"));
+                hh.setGiaNhap(rs.getLong("giaNhap"));
+                hh.setSoLuong(rs.getInt("soLuong"));
                 
+                list.add(hh);
             }
-            
-            
-            
         } catch (SQLException ex) {
-            Logger.getLogger(DAL_NhaCungCap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAL_HangHoa.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -227,7 +237,4 @@ public class DAL_NhaCungCap {
         }
         return list;
     }
-    
-    
-    
 }
