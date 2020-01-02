@@ -11,7 +11,7 @@ package DTO;
  */
 public class DTO_ChiTietHoaDonBan {
     int id,idHoaDonBan,soLuong,idHangHoa;
-    double donGia,thanhTien;
+    int donGia,thanhTien;
 
     public int getId() {
         return id;
@@ -45,21 +45,19 @@ public class DTO_ChiTietHoaDonBan {
         this.idHangHoa = idHangHoa;
     }
 
-    public double getDonGia() {
+    public int getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(double donGia) {
+    public void setDonGia(int donGia) {
         this.donGia = donGia;
     }
 
-    public double getThanhTien() {
+    public int getThanhTien() {
         return thanhTien;
     }
 
-    public void setThanhTien(double thanhTien) {
+    public void setThanhTien(int thanhTien) {
         this.thanhTien = thanhTien;
-    }
-
-    
+    } 
 }
