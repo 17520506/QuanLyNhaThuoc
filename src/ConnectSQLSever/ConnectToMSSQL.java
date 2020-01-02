@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -28,7 +28,7 @@ public class ConnectToMSSQL {
             Logger.getLogger(ConnectToMSSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=QLNhaThuoc", "sa", "hautjeuthu");
+            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=QLNhaThuoc", "sa", "123456");
         } catch (SQLException ex) {
             Logger.getLogger(ConnectToMSSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
