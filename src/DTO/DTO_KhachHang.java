@@ -15,6 +15,7 @@ public class DTO_KhachHang {
     private String name;
     private String sdt;
     private String email;
+    private String address;
 
     public int getId() {
         return id;
@@ -47,5 +48,14 @@ public class DTO_KhachHang {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
     
 }

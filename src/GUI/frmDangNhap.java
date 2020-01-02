@@ -141,7 +141,7 @@ public class frmDangNhap extends javax.swing.JFrame {
         BLL_Account bLL_Account = new BLL_Account();
         String strUserNameString = txtUserName.getText().trim();
         String strPasswordString = txtPassword.getText().trim();
-        String truyVan = "select * from tblAccount where userName='" + strUserNameString + "' and passWord='" + strPasswordString + "'";
+        String truyVan = "select * from Account where userName='" + strUserNameString + "' and passWord='" + strPasswordString + "'";
         ResultSet rs = quanlynhathuoc.QuanLyNhaThuoc.s.ExcuteQueryGetTable(truyVan);
         if (txtUserName.getText().length() == 0 || txtPassword.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập thông tin tài khoản hoặc mật khẩu", "Thông báo", 1);
